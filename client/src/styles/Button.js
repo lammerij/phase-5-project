@@ -3,11 +3,11 @@ import styled from "styled-components";
 const COLORS = {
   primary: {
     "--main": "white",
-    "--accent": "green",
+    "--accent": "blue",
   },
   secondary: {
     "--main": "white",
-    "--accent": "green",
+    "--accent": "blue",
   },
 };
 

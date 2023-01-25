@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
-import SignUpForm from "../components/SignUpForm";
+import Signup from "../components/Signup";
 import { Button } from "../styles";
 
 function Login() {
@@ -23,7 +24,7 @@ function Login() {
         </>
       ) : (
         <>
-          <SignUpForm />
+          <Signup />
           <Divider />
           <p>
             Already have an account? &nbsp;
@@ -38,9 +39,9 @@ function Login() {
 }
 
 const Logo = styled.h1`
-  font-family: "Permanent Marker", cursive;
+  font-family: "Fira Sans", serif;
   font-size: 3rem;
-  color: green;
+  color: black;
   margin: 8px 0 16px;
 `;
 

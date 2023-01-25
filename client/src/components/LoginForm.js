@@ -1,11 +1,9 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { useHistory } from "react-router";
 import { Button, Error, Input, FormField, Label } from "../styles";
 import {UserContext} from '../context/userContext'
 
-function LoginForm({ setUser }) {
-  const history = useHistory();
+function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +32,6 @@ function LoginForm({ setUser }) {
       setIsLoading(false);
       if (response.ok) {
         response.json().then((user) => setCurrentUser(user));
-        history.push("/");
       } else {
         response.json().then((error) => setErrors(error.errors));
       }
