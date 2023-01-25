@@ -16,9 +16,10 @@ function App() {
 
   if (!currentUser) {
     return (
-      <div className="App">
-        <h1>Page Count: {count}</h1>
-      </div>
+     <Routes>
+       <Route path="/signup" element={<Signup/>}/>
+       <Route path="/login" element={<Login/>}/>
+     </Routes>
     );
   }
 }
