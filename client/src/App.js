@@ -1,19 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { UserContext } from "./context/userContext";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [currentUser, setCurrentUser] = useContext(UserContext);
 
   useEffect(() => {
-    fetch("/hello")
+    fetch("/auth")
       .then((r) => r.json())
-      .then((data) => setCount(data.count));
+      .then((currentUser) => setCurrentUser(currentUser));
   }, []);
 
-  return (
-    <div className="App">
-      <h1>Page Count: {count}</h1>
-    </div>
-  );
+  if (!currentUser) {
+    return (
+      <div className="App">
+        <h1>Page Count: {count}</h1>
+      </div>
+    );
+  }
 }
 
 export default App;
