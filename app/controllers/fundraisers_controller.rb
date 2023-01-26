@@ -1,2 +1,0 @@
-class FundraisersController < ApplicationController
-end

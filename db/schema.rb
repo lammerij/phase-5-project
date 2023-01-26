@@ -10,38 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_24_172054) do
+ActiveRecord::Schema.define(version: 2023_01_26_174007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "causes", force: :cascade do |t|
-    t.string "name"
+    t.text "name"
     t.string "organization"
-    t.integer "organizer_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "donations", force: :cascade do |t|
-    t.float "amount"
-    t.integer "fundraiser_id"
-    t.integer "donor_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "fundraisers", force: :cascade do |t|
-    t.string "name"
     t.text "description"
-    t.integer "cause_id"
-    t.integer "donation_id"
     t.integer "number_of_donations"
     t.float "amount_raised"
     t.float "amount_needed"
     t.datetime "time_remaining"
+    t.bigint "organizer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["organizer_id"], name: "index_causes_on_organizer_id"
+  end
+
+  create_table "donations", force: :cascade do |t|
+    t.float "amount"
+    t.integer "cause_id"
+    t.bigint "donor_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["donor_id"], name: "index_donations_on_donor_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,6 +45,7 @@ ActiveRecord::Schema.define(version: 2023_01_24_172054) do
     t.string "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "avatar"
   end
 
 end

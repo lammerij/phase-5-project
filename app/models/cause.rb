@@ -1,3 +1,5 @@
 class Cause < ApplicationRecord
-    belongs_to :organizer
+  belongs_to :organizer
+  has_many :donations
+  has_many :donors, through: :donations
 end

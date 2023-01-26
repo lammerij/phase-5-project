@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
-  resources :donations
-  resources :fundraisers
-  resources :causes
   
 
-  # User Routes 
+  resources :causes
+  resources :donations
   resources :users
+  # User Routes 
   get "/auth", to: "users#show"
   post "/signup", to: "users#create"
   post "/login", to: "sessions#create"
