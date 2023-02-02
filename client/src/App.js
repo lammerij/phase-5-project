@@ -9,19 +9,21 @@ function App() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
   useEffect(() => {
-    fetch("/auth")
+    fetch("/me")
       .then((r) => r.json())
-      .then((currentUser) => setCurrentUser(currentUser));
+      .then((user) => setCurrentUser(user));
   }, []);
 
   if (!currentUser) {
+
     return (
      <Routes>
        <Route path="/signup" element={<Signup/>}/>
        <Route path="/login" element={<Login/>}/>
+       <Route/>
      </Routes>
     );
-  }
 }
+  }
 
 export default App;

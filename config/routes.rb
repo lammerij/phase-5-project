@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 
   resources :causes
   resources :donations
-  resources :users
+  # resources :users
   # User Routes 
-  get "/auth", to: "users#show"
+  get "/me", to: "users#show"
   post "/signup", to: "users#create"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
