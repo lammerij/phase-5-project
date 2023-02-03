@@ -25,6 +25,11 @@ function Signup() {
     setDisplayName(event.target.value);
   }
 
+  function handleTypeChange(event){
+    console.log(event.target.value)
+  }
+
+
   function handleNewUserSubmit(event) {
     event.preventDefault();
 
@@ -45,12 +50,13 @@ function Signup() {
       if (res.ok) {
         res.json().then(setCurrentUser(newUser));
       } else {
-        console.log(errors);
+        res.json().then((error) => setErrors(error.errors));
       }
     });
 
     setUsername("");
     setPassword("");
+    setDisplayName("")
   }
 
   return (
@@ -86,9 +92,8 @@ function Signup() {
       </FormField>
       <FormField>
         <Label htmlFor="type"></Label>
-        <select>
+        <select onChange={handleTypeChange}>
           type="text" rows="1" id="type" value={type}
-          onChange={(e) => setType(e.target.value)}
           <option value="" disabled>
             Choose a Role...
           </option>

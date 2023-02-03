@@ -3,8 +3,8 @@ import React, { createContext, useState } from "react";
 const UserContext = createContext();
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const value = [user, setUser];
+  const [currentUser, setCurrentUser] = useState(null);
+  const value = [currentUser, setCurrentUser];
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

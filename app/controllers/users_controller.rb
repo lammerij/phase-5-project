@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       session[:new_user] = new_user.id
       render json: new_user, status: :created
     else
-      render json: { errors: ["user_data_invalid"] }, status: :unprocessable_entity
+      render json: { errors: ["Please Fill Out All Fields"] }, status: :unprocessable_entity
     end
   end
 
