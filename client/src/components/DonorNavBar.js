@@ -22,13 +22,10 @@ function NavBar() {
       </Logo>
       <Nav>
         <Button as={Link} to="/causes">
-          Causes
+          Find A Cause
         </Button>
-        <Button as={Link} to="/newcause">
-          New Cause
-        </Button>
-        <Button as={Link} to="/donations">
-          Donations
+        <Button as={Link} to="/mydonations">
+          My Donations
         </Button>
         <Button onClick={handleLogoutClick}>Logout</Button>
       </Nav>

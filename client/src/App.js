@@ -4,6 +4,7 @@ import { UserContext } from "./context/userContext";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import NavBar from "./components/Navbar";
+import DonorNavBar from './components/DonorNavBar'
 
 function App() {
   const [user, setUser] = useContext(UserContext);
@@ -23,7 +24,7 @@ function App() {
   }
 
   if (user.type === "Donor") {
-    return <NavBar />;
+    return <DonorNavBar />;
   }
 }
 
