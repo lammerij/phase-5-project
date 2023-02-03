@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { Button, Input, FormField, Label, Error } from "../styles";
+import { Button, Input, FormField, Label } from "../styles";
 
 import { UserContext } from "../context/userContext";
 
@@ -26,7 +26,7 @@ function Signup() {
   }
 
   function handleTypeChange(event){
-    console.log(event.target.value)
+    setType(event.target.value)
   }
 
 
@@ -36,8 +36,8 @@ function Signup() {
     const newUser = {
       username,
       password,
+      type,
       display_name: displayName,
-      type: type,
     };
 
     console.log("newUser", newUser);
@@ -104,11 +104,11 @@ function Signup() {
       <FormField>
         <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
       </FormField>
-      <FormField>
+      {/* <FormField>
         {errors.map((err) => (
           <Error key={err}>{err}</Error>
         ))}
-      </FormField>
+      </FormField> */}
     </form>
   );
 }
