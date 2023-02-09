@@ -3,14 +3,14 @@ Rails.application.routes.draw do
 
   resources :causes
   resources :donations
-  # resources :users
+  resources :users only: [:update]
   
   
-  # User Routes 
-  get "/me", to: "users#show"
-  post "/signup", to: "users#create"
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+  #auth routes for login/signup
+  get '/me', to: "users#show"
+  post '/signup', to: "users#create"
+  post '/login', to: "sessions#create"
+  delete '/logout', to: "sessions#destroy"
 
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

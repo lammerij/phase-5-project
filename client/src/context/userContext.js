@@ -4,7 +4,8 @@ const UserContext = createContext();
 
 function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-  const value = [user, setUser];
+  const [avatar, setAvatar] = useState(null)
+  const value = [user, setUser, avatar, setAvatar];
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
