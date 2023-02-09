@@ -3,13 +3,14 @@ Rails.application.routes.draw do
 
   resources :causes
   resources :donations
-  resources :users only: [:update]
+  # resources :users, only: [:update]
   
   
   #auth routes for login/signup
   get '/me', to: "users#show"
   post '/signup', to: "users#create"
   post '/login', to: "sessions#create"
+  patch '/updateprofile', to: "users#update"
   delete '/logout', to: "sessions#destroy"
 
   

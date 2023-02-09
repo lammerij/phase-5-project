@@ -30,6 +30,9 @@ function NavBar() {
         <Button as={Link} to="/donations">
           Donations
         </Button>
+        <Button as={Link} to="/updateprofile">
+          Edit Profile
+        </Button>
         <Button onClick={handleLogoutClick}>Logout</Button>
       </Nav>
     </Wrapper>

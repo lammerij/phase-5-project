@@ -2,13 +2,13 @@ import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { UserContext } from "./context/userContext";
 import Login from "./components/Login";
-import Signup from "./components/Signup";
 import NavBar from "./components/Navbar";
 import DonorNavBar from './components/DonorNavBar'
+import EditProfile from './components/EditProfile'
 
 function App() {
   const [user, setUser] = useContext(UserContext);
-
+  // console.log(user)
   useEffect(() => {
     fetch("/me").then((response) => {
       if (response.ok) {
@@ -20,7 +20,14 @@ function App() {
   if (!user) return <Login />;
 
   if (user.type === "Organizer") {
-    return <NavBar />;
+    return (
+    <>
+    <NavBar />;
+    <Routes>
+      <Route exact path= '/updateprofile' element={<EditProfile/>}/>
+    </Routes>
+    </>
+    )
   }
 
   if (user.type === "Donor") {
