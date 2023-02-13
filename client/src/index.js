@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/userContext";
 import { createGlobalStyle } from "styled-components";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 const GlobalStyle = createGlobalStyle`
   *,
