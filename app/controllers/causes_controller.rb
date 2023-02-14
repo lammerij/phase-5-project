@@ -1,25 +1,25 @@
 class CausesController < ApplicationController
-    skip_before_action :authorize 
-    
-    def index
-        causes = Cause.all
-        render json: causes
-    end
+  skip_before_action :authorize
 
-    def show 
-        causes = Cause.find_by(id: params[:id])
-        render json: causes
-    end 
+  def index
+    causes = Cause.all
+    render json: causes
+  end
 
-    def create 
-        new_cause = Cause.create!(cause_params)
-        render json: new_cause, status: :created
-    end
+  def show
+    causes = Cause.find_by(id: params[:id])
+    render json: causes
+  end
 
+  def create
+    user = User.find_by(id: session[:user_id])
+    new_cause = user.causes.create!(cause_params)
+    render json: new_cause, status: :created
+  end
 
-    private
+  private
 
-    def cause_params
-        params.permit(:name, :organization, :description, :number_of_donations, :amount_raised, :amount_needed, :time_remaining)
-    end
+  def cause_params
+    params.permit(:name, :organization, :description, :number_of_donations, :amount_raised, :amount_needed, :time_remaining)
+  end
 end

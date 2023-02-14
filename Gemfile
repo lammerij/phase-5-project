@@ -44,3 +44,5 @@ gem 'active_model_serializers', '~> 0.10.12'
 gem "jsonapi-serializer", "~> 2.2"
 gem 'figaro'
 gem 'dotenv-rails', '~> 2.8'
+
+gem "aws-sdk-s3", "~> 1.119"

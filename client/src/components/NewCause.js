@@ -56,7 +56,9 @@ function NewCause() {
       body: JSON.stringify(newCause),
     }).then((res) => {
       if (res.ok) {
-        res.json().then(setCause(newCause));
+        res.json().then((newCause)=>{
+            setCause(newCause)
+        });
       } else {
         res.json().then((error) => setErrors(error.errors));
       }

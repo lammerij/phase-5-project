@@ -7,6 +7,7 @@ import DonorNavBar from "./components/DonorNavBar";
 import Home from "./components/Home";
 import CauseList from "./components/CauseList";
 import NewCause from "./components/NewCause";
+import EditProfile from "./components/UserProfile";
 
 function App() {
   const [user, setUser] = useContext(UserContext);
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/causes" element={<CauseList />} />
           <Route exact path= "/newcause" element={<NewCause/>}/>
+          <Route exact path= "/editprofile" element={<EditProfile/>}/>
         </Routes>
       </>
     );

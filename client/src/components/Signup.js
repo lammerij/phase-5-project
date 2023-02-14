@@ -30,32 +30,28 @@ function Signup() {
     setDisplay_Name(event.target.value);
   }
 
-  function handleTypeChange(event){
-    setType(event.target.value)
+  function handleTypeChange(event) {
+    setType(event.target.value);
   }
-
 
   function handleNewUserSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData()
+    const formData = new FormData();
 
-    formData.append('username', username)
-    formData.append('password', password)
-    formData.append('display_name', display_name)
-    formData.append('type', type)
-    formData.append('image', selectedImage)
-
-    console.log(formData)
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("display_name", display_name);
+    formData.append("type", type);
+    formData.append("image", selectedImage);
 
     fetch("/signup", {
       method: "POST",
-      headers: { "Content-type": "application/json" },
       body: formData,
     }).then((res) => {
       if (res.ok) {
-        res.json().then((newUser)=>{
-          setCurrentUser(newUser)
+        res.json().then((newUser) => {
+          setCurrentUser(newUser);
         });
       } else {
         res.json().then((error) => setErrors(error.errors));
@@ -64,9 +60,9 @@ function Signup() {
 
     setUsername("");
     setPassword("");
-    setDisplay_Name("")
-    setType("")
-    setSelectedImage(null)
+    setDisplay_Name("");
+    setType("");
+    setSelectedImage(null);
   }
 
   return (
