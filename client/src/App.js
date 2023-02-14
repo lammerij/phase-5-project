@@ -6,6 +6,7 @@ import NavBar from "./components/Navbar";
 import DonorNavBar from "./components/DonorNavBar";
 import Home from "./components/Home";
 import CauseList from "./components/CauseList";
+import NewCause from "./components/NewCause";
 
 function App() {
   const [user, setUser] = useContext(UserContext);
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/causes" element={<CauseList />} />
+          <Route exact path= "/newcause" element={<NewCause/>}/>
         </Routes>
       </>
     );

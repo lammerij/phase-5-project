@@ -6,23 +6,28 @@ import { UserContext } from "../context/userContext";
 
 function Signup() {
   const [username, setUsername] = useState("");
-  const [displayName, setDisplayName] = useState("");
+  const [display_name, setDisplay_Name] = useState("");
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
   function handleUserNameChange(event) {
     setUsername(event.target.value);
   }
+
+  function handleFileChange(event) {
+    setSelectedImage(event.target.files[0]);
+  }
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
 
   function handleDisplayName(event) {
-    setDisplayName(event.target.value);
+    setDisplay_Name(event.target.value);
   }
 
   function handleTypeChange(event){
@@ -33,22 +38,25 @@ function Signup() {
   function handleNewUserSubmit(event) {
     event.preventDefault();
 
-    const newUser = {
-      username,
-      password,
-      type,
-      display_name: displayName,
-    };
+    const formData = new FormData()
 
-    console.log("newUser", newUser);
+    formData.append('username', username)
+    formData.append('password', password)
+    formData.append('display_name', display_name)
+    formData.append('type', type)
+    formData.append('image', selectedImage)
+
+    console.log(formData)
 
     fetch("/signup", {
       method: "POST",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newUser),
+      body: formData,
     }).then((res) => {
       if (res.ok) {
-        res.json().then(setCurrentUser(newUser));
+        res.json().then((newUser)=>{
+          setCurrentUser(newUser)
+        });
       } else {
         res.json().then((error) => setErrors(error.errors));
       }
@@ -56,7 +64,9 @@ function Signup() {
 
     setUsername("");
     setPassword("");
-    setDisplayName("")
+    setDisplay_Name("")
+    setType("")
+    setSelectedImage(null)
   }
 
   return (
@@ -86,7 +96,7 @@ function Signup() {
         <Input
           type="text"
           id="displayName"
-          value={displayName}
+          value={display_name}
           onChange={handleDisplayName}
         />
       </FormField>
@@ -100,6 +110,15 @@ function Signup() {
           <option value="Organizer">Organizer</option>
           <option value="Donor">Donor</option>
         </select>
+      </FormField>
+      <FormField>
+        <Label htmlFor="avatar">Upload a Profile Pic!</Label>
+        <Input
+          type="file"
+          id="avatar"
+          name="avatar"
+          onChange={handleFileChange}
+        />
       </FormField>
       <FormField>
         <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
