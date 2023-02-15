@@ -19,7 +19,7 @@ function NavBar() {
       <Link to="/causes">Causes</Link>
       <Link to="/newcause">New Cause</Link>
       <Link to="/mycauses">My Causes</Link>
-      <Link to="/editprofile">Edit Profile</Link>
+      <Link to="/profile">Profile</Link>
       <span>
         Hello {user.username}!
         <button className="sign-out" onClick={handleLogoutClick}>

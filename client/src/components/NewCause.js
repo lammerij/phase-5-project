@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { MDBInput, MDBRow, MDBCol, MDBBtn } from "mdb-react-ui-kit";
+import { MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit";
 
 function NewCause() {
   const [cause, setCause] = useState([]);
@@ -12,6 +12,7 @@ function NewCause() {
   const [amountNeeded, setAmountNeeded] = useState();
   const [timeRemaining, setTimeRemaining] = useState(new Date());
   const [errors, setErrors] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   function handleNameSubmit(event) {
     setName(event.target.value);
@@ -34,30 +35,31 @@ function NewCause() {
   function handleTimeRemainingSubmit(event) {
     setTimeRemaining(event.target.value);
   }
+  function handleFileChange(event) {
+    setSelectedImage(event.target.files[0]);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const newCause = {
-      name,
-      organization,
-      description,
-      number_of_donations: numberOfDonations,
-      amount_raised: amountRaised,
-      amount_needed: amountNeeded,
-      time_remaining: timeRemaining,
-    };
+    const formData = new FormData();
 
-    console.log(newCause)
+    formData.append("name", name);
+    formData.append("organization", organization);
+    formData.append("description", description);
+    formData.append("number_of_donations", numberOfDonations);
+    formData.append("amount_raised", amountRaised);
+    formData.append("amount_needed", amountNeeded);
+    formData.append("time_remaining", timeRemaining);
+    formData.append("image", selectedImage);
 
     fetch("/causes", {
       method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newCause),
+      body: formData,
     }).then((res) => {
       if (res.ok) {
-        res.json().then((newCause)=>{
-            setCause(newCause)
+        res.json().then((newCause) => {
+          setCause(newCause);
         });
       } else {
         res.json().then((error) => setErrors(error.errors));
@@ -67,78 +69,77 @@ function NewCause() {
     setName("");
     setOrganization("");
     setDescription("");
-    setNumberOfDonations("")
-    setAmountRaised(0)
-    setAmountNeeded(0)
-    setTimeRemaining(new Date())
-
+    setNumberOfDonations("");
+    setAmountRaised(0);
+    setAmountNeeded(0);
+    setSelectedImage(null);
+    setTimeRemaining(new Date());
   };
   return (
     <>
-      <h1>Start a New Cause!</h1>
       <form onSubmit={handleSubmit}>
-        <MDBRow classname="g-1">
-          <MDBCol>
-            <MDBInput
-              id="name"
-              label="Name"
-              value={name}
-              onChange={handleNameSubmit}
-            />
-          </MDBCol>
-          <MDBCol>
-            <MDBInput
-              id="organization"
-              label="Organization"
-              type="text"
-              value={organization}
-              onChange={handleOrganizationSubmit}
-            />
-          </MDBCol>
-          <MDBCol>
-            <MDBInput
-              id="description"
-              label="Description"
-              type="text"
-              value={description}
-              onChange={handleDescriptionSubmit}
-            />
-          </MDBCol>{" "}
-          <MDBCol>
-            <MDBInput
-              id="numberOfDonations"
-              label="Number Of Donations"
-              type="number"
-              value={numberOfDonations}
-              onChange={handleNumberOfDonationsSubmit}
-            />
-          </MDBCol>{" "}
-          <MDBCol>
-            <MDBInput
-              id="amountNeeded"
-              label="$ Amount Needed"
-              type="number"
-              value={amountNeeded}
-              onChange={handleAmountNeededSubmit}
-            />
-          </MDBCol>
-          <MDBCol>
-            <MDBInput
-              id="amountRaised"
-              label="$ Amount Raised"
-              type="number"
-              value={amountRaised}
-              onChange={handleAmountRaisedSubmit}
-            />
-          </MDBCol>
-          <MDBCol>
-            <MDBInput
-              id="timeRemaining"
-              type="date"
-              onChange={handleTimeRemainingSubmit}
-            />
-          </MDBCol>
-        </MDBRow>
+        <MDBInput
+          wrapperClass="mb-4"
+          id="name"
+          label="Name"
+          value={name}
+          onChange={handleNameSubmit}
+        />
+        <MDBInput
+          wrapperClass="mb-4"
+          id="organization"
+          label="Organization"
+          type="text"
+          value={organization}
+          onChange={handleOrganizationSubmit}
+        />
+        <MDBInput
+          wrapperClass="mb-4"
+          id="numberOfDonations"
+          label="Number Of Donations"
+          type="number"
+          value={numberOfDonations}
+          onChange={handleNumberOfDonationsSubmit}
+        />
+        <MDBInput
+          wrapperClass="mb-4"
+          id="amountNeeded"
+          label="$ Amount Needed"
+          type="number"
+          value={amountNeeded}
+          onChange={handleAmountNeededSubmit}
+        />
+        <MDBInput
+          wrapperClass="mb-4"
+          id="amountRaised"
+          label="$ Amount Raised"
+          type="number"
+          value={amountRaised}
+          onChange={handleAmountRaisedSubmit}
+        />
+        <MDBInput
+          wrapperClass="mb-4"
+          id="timeRemaining"
+          label="Fundraiser End Date"
+          type="date"
+          value={timeRemaining}
+          onChange={handleTimeRemainingSubmit}
+        />
+        <MDBTextArea
+          wrapperClass="mb-4"
+          label="Description"
+          id="description"
+          rows={4}
+          value={description}
+          onChange={handleDescriptionSubmit}
+        />
+        <MDBInput
+          wrapperClass="mb-4"
+          id="avatar"
+          type="file"
+          name="avatar"
+          onChange={handleFileChange}
+        />
         <MDBBtn type="submit">Submit</MDBBtn>
       </form>
     </>
