@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { UserContext } from '../context/userContext'
+import CauseCard from './CauseCard'
 
 function CauseList() {
-  return (
-    <div>CauseList</div>
-  )
+  const [causes, setCauses] = useContext(UserContext)
+
+  console.log(causes)
+
+  return <CauseCard/>
 }
 
 export default CauseList

@@ -2,7 +2,7 @@ class CausesController < ApplicationController
   skip_before_action :authorize
 
   def index
-    causes = Cause.all
+    causes = Cause.all.with_attached_image
     render json: causes
   end
 
@@ -20,6 +20,6 @@ class CausesController < ApplicationController
   private
 
   def cause_params
-    params.permit(:name, :organization, :description, :number_of_donations, :amount_raised, :amount_needed, :time_remaining)
+    params.permit(:name, :organization, :description, :number_of_donations, :amount_raised, :amount_needed, :time_remaining, :image)
   end
 end

@@ -10,8 +10,8 @@ import NewCause from "./components/NewCause";
 import UserProfile from "./components/UserProfile";
 
 function App() {
-  const [user, setUser] = useContext(UserContext);
-  console.log(user)
+  const [user, setUser, causes, setCauses] = useContext(UserContext);
+  // console.log(causes)
   useEffect(() => {
     fetch("/me").then((response) => {
       if (response.ok) {
@@ -19,6 +19,16 @@ function App() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    fetch("/causes").then((res) => {
+      if (res.ok) {
+        res.json().then((r) => {
+          setCauses(r);
+        });
+      }
+    });
+  }, [setCauses, user]);
 
   if (!user) return <Login />;
 
@@ -29,8 +39,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/causes" element={<CauseList />} />
-          <Route exact path= "/newcause" element={<NewCause/>}/>
-          <Route exact path= "/profile" element={<UserProfile/>}/>
+          <Route exact path="/newcause" element={<NewCause />} />
+          <Route exact path="/profile" element={<UserProfile />} />
         </Routes>
       </>
     );

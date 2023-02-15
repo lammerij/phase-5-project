@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
 
-  resources :causes
+  resources :causes, only: [:index, :create]
   resources :donations
   # resources :users, only: [:update]
   

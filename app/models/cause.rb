@@ -2,6 +2,7 @@ class Cause < ApplicationRecord
   belongs_to :organizer
   has_many :donations
   has_many :donors, through: :donations
+  has_one_attached :image
 
   validates :name, presence: true
   validates :organization, presence: true
