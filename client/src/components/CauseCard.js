@@ -8,15 +8,20 @@ import {
   MDBCardImage,
   MDBRipple,
   MDBContainer,
+  MDBBtn,
 } from "mdb-react-ui-kit";
 
-function CauseCard() {
+function CauseCard({ cause }) {
   const [user, setUser, causes, setCauses] = useContext(UserContext);
-  console.log(causes)
 
-//  const {id, image, name, description, organization, amount_needed, amount_raised, time_remaining} = cause
-
-
+  const {
+    id,
+    name,
+    organization,
+    amount_raised,
+    amount_needed,
+    time_remaining,
+  } = cause;
 
   return (
     <div>
@@ -27,7 +32,7 @@ function CauseCard() {
             rippleTag="div"
             className="bg-image hover-overlay"
           >
-            <MDBCardImage fluid alt="..." />
+            <MDBCardImage src={cause.image} fluid alt="..." />
             <a>
               <div
                 className="mask"
@@ -36,11 +41,15 @@ function CauseCard() {
             </a>
           </MDBRipple>
           <MDBCardBody>
-            <MDBCardTitle></MDBCardTitle>
-            <MDBCardText>{}</MDBCardText>
-            <MDBCardText>{}</MDBCardText>
-            <MDBCardText>{}</MDBCardText>
-            <MDBCardText>{user.display_name}</MDBCardText>
+            <h2>{cause.name}</h2>
+            <MDBCardText>Organization: {cause.organization}</MDBCardText>
+            <MDBCardText>Amount Needed: ${cause.amount_needed}</MDBCardText>
+            <MDBCardText>Amount Raised: ${cause.amount_raised}</MDBCardText>
+            <MDBCardText>
+              Time Left To Donate: {cause.time_remaining}
+            </MDBCardText>
+            <MDBCardText>Organized By: {user.display_name}</MDBCardText>
+            <MDBBtn>Donations</MDBBtn>
           </MDBCardBody>
         </MDBCard>
       </MDBContainer>

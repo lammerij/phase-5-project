@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MDBBtn } from 'mdb-react-ui-kit';
 import styled from 'styled-components';
 
-function Home() {
+function DonorHome() {
   return (
     <header>
     <div
@@ -15,6 +15,9 @@ function Home() {
         <div className='text-white'>
           <Logo>goFundit</Logo>
           <h4 className='mb-3'>Make A Difference</h4>
+          <Link to="/causes"><MDBBtn tag="a" outline size="lg">
+            Call to action
+          </MDBBtn></Link>
         </div>
       </div>
     </div>
@@ -31,4 +34,4 @@ const Logo = styled.h1`
   margin: 8px 0 16px;
 `;
 
-export default Home
+export default DonorHome

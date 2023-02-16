@@ -6,9 +6,9 @@ const UserContext = createContext();
 //create the context provider
 function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [causes, setCauses] = useState([]);
+  const [causes, setCauses] = useState([])
 
-  const value = [user, setUser, causes, setCauses];
+  const value = [user, setUser, causes, setCauses]
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

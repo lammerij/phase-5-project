@@ -8,10 +8,12 @@ import Home from "./components/Home";
 import CauseList from "./components/CauseList";
 import NewCause from "./components/NewCause";
 import UserProfile from "./components/UserProfile";
+import DonorHome from "./components/DonorHome";
 
 function App() {
   const [user, setUser, causes, setCauses] = useContext(UserContext);
-  // console.log(causes)
+
+  console.log(causes)
   useEffect(() => {
     fetch("/me").then((response) => {
       if (response.ok) {
@@ -21,14 +23,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("/causes").then((res) => {
-      if (res.ok) {
-        res.json().then((r) => {
-          setCauses(r);
-        });
+    fetch("/causes").then((response) => {
+      if (response.ok) {
+        response.json().then((cause) => setCauses(cause));
       }
     });
-  }, [setCauses, user]);
+  }, []);
 
   if (!user) return <Login />;
 
@@ -47,7 +47,14 @@ function App() {
   }
 
   if (user.type === "Donor") {
-    return <DonorNavBar />;
+    return (
+    <>
+    <DonorNavBar />;
+    <Routes>
+      <Route exact path="/" element={<DonorHome/>}/>
+    </Routes>
+    </>
+    )
   }
 }
 
