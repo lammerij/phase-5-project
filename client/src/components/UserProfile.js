@@ -20,16 +20,46 @@ import {
 } from "mdb-react-ui-kit";
 
 function UserProfile() {
-  const [user, setUser] = useContext(UserContext);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [updatedDisplay_name, setUpdatedDisplay_name] = useState('')
+  const [user, setUser, errors, setErrors, causes, setCauses] =
+    useContext(UserContext);
+  const [selectedFile, setSelectedImage] = useState(null);
   const [basicModal, setBasicModal] = useState(false);
 
-  const {display_name} = user
+  const { display_name, type, image } = user;
 
   const toggleShow = () => setBasicModal(!basicModal);
 
-  console.log(user);
+  function handleFileChange(event) {
+    setSelectedImage(event.target.files[0]);
+  }
+
+  // console.log(user);
+
+  function handleEditProfileSubmit(event) {
+    event.preventDefault();
+
+    const userId = user.id;
+
+    const formData = new FormData();
+
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
+
+    fetch(`/users/${userId}`, {
+      method: "PATCH",
+      body: formData,
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((updatedUser) => {
+          setUser(updatedUser);
+        });
+      } else {
+        res.json().then((err) => setErrors(err.errors));
+        console.log(errors);
+      }
+    });
+  }
 
   return (
     <div>
@@ -40,7 +70,7 @@ function UserProfile() {
             rippleTag="div"
             className="bg-image hover-overlay"
           >
-            <MDBCardImage src={user.image} fluid alt="..." />
+            <MDBCardImage src={image} fluid alt="..." />
             <a>
               <div
                 className="mask"
@@ -49,8 +79,8 @@ function UserProfile() {
             </a>
           </MDBRipple>
           <MDBCardBody>
-            <MDBCardTitle>{user.display_name}</MDBCardTitle>
-            <MDBCardText>{user.type}</MDBCardText>
+            <MDBCardTitle>{display_name}</MDBCardTitle>
+            <MDBCardText>{type}</MDBCardText>
             <MDBBtn onClick={toggleShow}>Edit Profile</MDBBtn>
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
               <MDBModalDialog>
@@ -62,22 +92,19 @@ function UserProfile() {
                       onClick={toggleShow}
                     ></MDBBtn>
                   </MDBModalHeader>
-                  <MDBModalTitle>Update Your Profile!</MDBModalTitle>
+                  <MDBModalTitle>Update Your Profile Pic!</MDBModalTitle>
                   <MDBModalBody>
-                    <form>
-                      <label htmlFor="displayName">Change Your Display Name</label>
-                      <MDBInput type="text" id="displayName" value={display_name}></MDBInput>
-                      <label htmlFor="avatar">Change Your Profile Pic!</label>
-                      <MDBInput type="file" id="avatar"></MDBInput>
+                    <form onSubmit={handleEditProfileSubmit}>
+                    <label htmlFor="avatar"></label>
+                      <MDBInput type="file" id="avatar" name="avatar" onChange={handleFileChange}></MDBInput>
+                      <MDBModalFooter>
+                        <MDBBtn color="secondary" onClick={toggleShow}>
+                          Close
+                        </MDBBtn>
+                        <MDBBtn>Save changes</MDBBtn>
+                      </MDBModalFooter>
                     </form>
                   </MDBModalBody>
-
-                  <MDBModalFooter>
-                    <MDBBtn color="secondary" onClick={toggleShow}>
-                      Close
-                    </MDBBtn>
-                    <MDBBtn>Save changes</MDBBtn>
-                  </MDBModalFooter>
                 </MDBModalContent>
               </MDBModalDialog>
             </MDBModal>

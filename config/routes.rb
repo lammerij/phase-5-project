@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :causes, only: [:index, :create, :destroy]
   resources :donations
-  # resources :users, only: [:update]
+  resources :users, only: [:update]
   
   
   #auth routes for login/signup

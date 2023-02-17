@@ -19,11 +19,15 @@ class UsersController < ApplicationController
 
   def update
     user = User.find_by(id: session[:user_id])
-    user.update!(user_params)
+    user.update!(update_params)
     render json: user
   end
 
   private
+
+  def update_params
+    params.permit(:id, :username, :display_name, :password, :type, :image)
+  end
 
   def user_params
     params.permit(:id, :username, :display_name, :password, :type, :image)

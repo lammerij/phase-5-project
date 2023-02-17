@@ -18,6 +18,7 @@ function DonorNavBar() {
       <Link to="/">goFundit</Link>
       <Link to="/causes">Causes</Link>
       <Link to="/mydonations">My Donations</Link>
+      <Link to="/profile">Profile</Link>
       <span>
         Hello {user.username}!
         <button className="sign-out" onClick={handleLogoutClick}>

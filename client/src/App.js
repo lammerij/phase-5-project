@@ -51,6 +51,7 @@ function App() {
     <Routes>
       <Route exact path="/" element={<DonorHome/>}/>
       <Route exact path="/causes" element={<CauseList/>}/>
+      <Route exact path="profile" element={<UserProfile/>}/>
     </Routes>
     </>
     )
