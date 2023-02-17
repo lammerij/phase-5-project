@@ -12,8 +12,6 @@ import DonorHome from "./components/DonorHome";
 
 function App() {
   const [user, setUser, causes, setCauses] = useContext(UserContext);
-
-  console.log(causes)
   useEffect(() => {
     fetch("/me").then((response) => {
       if (response.ok) {
@@ -52,6 +50,7 @@ function App() {
     <DonorNavBar />;
     <Routes>
       <Route exact path="/" element={<DonorHome/>}/>
+      <Route exact path="/causes" element={<CauseList/>}/>
     </Routes>
     </>
     )

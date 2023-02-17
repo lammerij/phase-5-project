@@ -15,6 +15,9 @@ function Home() {
         <div className='text-white'>
           <Logo>goFundit</Logo>
           <h4 className='mb-3'>Make A Difference</h4>
+          <Link to="/newcause"><MDBBtn tag="a" outline size="lg">
+            Create A New Cause
+          </MDBBtn></Link>
         </div>
       </div>
     </div>
