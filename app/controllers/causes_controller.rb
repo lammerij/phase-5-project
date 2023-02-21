@@ -29,10 +29,6 @@ class CausesController < ApplicationController
 
   private
 
-  def find_cause
-    Cause.find_by(id: params[:id])
-  end
-
   def cause_params
     params.permit(:name, :organization, :description, :number_of_donations, :amount_raised, :amount_needed, :time_remaining, :image)
   end

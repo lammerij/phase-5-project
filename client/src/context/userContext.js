@@ -7,8 +7,9 @@ const UserContext = createContext();
 function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [causes, setCauses] = useState([])
+  const [donations, setDonations] = useState([])
 
-  const value = [user, setUser, causes, setCauses]
+  const value = [user, setUser, causes, setCauses, donations, setDonations]
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

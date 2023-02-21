@@ -11,7 +11,7 @@ import UserProfile from "./components/UserProfile";
 import DonorHome from "./components/DonorHome";
 
 function App() {
-  const [user, setUser, causes, setCauses] = useContext(UserContext);
+  const [user, setUser, causes, setCauses, donations, setDonations] = useContext(UserContext);
   useEffect(() => {
     fetch("/me").then((response) => {
       if (response.ok) {
@@ -27,6 +27,16 @@ function App() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    fetch("/donations").then((response) => {
+      if (response.ok) {
+        response.json().then((donation) => setDonations(donation));
+      }
+    });
+  }, []);
+
+
 
   if (!user) return <Login />;
 
