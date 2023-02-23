@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
+import { redirect } from "react-router-dom";
 import {
   MDBCard,
   MDBCardBody,
@@ -15,7 +16,6 @@ import {
   MDBPopoverHeader,
   MDBInput,
 } from "mdb-react-ui-kit";
-import { cardMediaClasses } from "@mui/material";
 
 function CauseCard({ cause }) {
   const [
@@ -25,11 +25,14 @@ function CauseCard({ cause }) {
     setCauses,
     errors,
     setErrors,
+    donations,
+    setDonations,
   ] = useContext(UserContext);
   const [amount, setAmount] = useState();
-  const [donation, setDonation] = useState([]);
+  const [newDonation, setNewDonation] = useState([]);
 
-  // console.log(cause.amount_raised);
+  // console.log(donations) returns undefined here but not in CauseList
+
   const {
     id,
     name,
@@ -40,10 +43,6 @@ function CauseCard({ cause }) {
     time_remaining,
     image,
   } = cause;
-
-  // function updatedAmountRaised(updatedAmount){
-  //   const updatedRaised = causes.map((cause) => cause.id ===
-  // }
 
   const deletedCauseList = (deletedCause) => {
     const deletedCauses = causes.filter((cause) => cause.id !== deletedCause);
@@ -57,19 +56,20 @@ function CauseCard({ cause }) {
   function handleDonationSubmit(event) {
     event.preventDefault();
 
+    const causeId = cause.id;
+
+    const formData = new FormData();
+    formData.append("amount", amount);
+    formData.append("cause_id", causeId);
+    formData.append("donor_id", user.id);
+
     fetch("/donations", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: amount,
-        cause_id: cause.id
-      }),
+      body: formData,
     }).then((r) => {
       if (r.ok) {
         r.json().then((newAmount) => {
-          setDonation(newAmount);
+          setNewDonation(newAmount);
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
@@ -77,6 +77,7 @@ function CauseCard({ cause }) {
       }
     });
     setAmount();
+    redirect("causes");
   }
 
   function handleDeleteCause() {
@@ -148,31 +149,32 @@ function CauseCard({ cause }) {
           </MDBRipple>
           <MDBCardBody>
             <MDBCardTitle>{name}</MDBCardTitle>
-            <ul className="list-group list-group-light list-group-small">
-              <li className="list-group-item px-4">{organization}</li>
-              <li className="list-group-item px-4">
+            <ul class="list-group list-group-light list-group-small">
+              <li class="list-group-item px-4">{organization}</li>
+              <li class="list-group-item px-4">
                 Amount Needed: ${amount_needed}
               </li>
               <li class="list-group-item px-4">
                 Amount Raised: ${amount_raised}
               </li>
-              <li className="list-group-item px-4">
+              <li class="list-group-item px-4">
                 Time Left To Donate: {time_remaining}
               </li>
             </ul>
             <MDBCardText>{description}</MDBCardText>
-            <MDBPopover color="danger" btnChildren="Donate!" placement="bottom">
-              <MDBPopoverHeader></MDBPopoverHeader>
+            <MDBPopover color="danger" btnChildren="Donate!" placement="right">
+              <MDBPopoverHeader alignment='center'>Make A Difference!</MDBPopoverHeader>
               <MDBPopoverBody>
                 <form onSubmit={handleDonationSubmit}>
                   <MDBInput
-                    label="Enter Amount"
+                    label="$Enter Amount..."
                     type="number"
                     id="amount"
                     name="amount"
                     value={amount}
+                    onChange={handleAmountChange}
                   ></MDBInput>
-                  <MDBBtn onChange={handleAmountChange} alignment="center">
+                  <MDBBtn rounded type="submit" alignment="center">
                     Give!
                   </MDBBtn>
                 </form>

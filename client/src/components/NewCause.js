@@ -7,7 +7,6 @@ function NewCause() {
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
   const [description, setDescription] = useState("");
-  const [numberOfDonations, setNumberOfDonations] = useState();
   const [amountRaised, setAmountRaised] = useState();
   const [amountNeeded, setAmountNeeded] = useState();
   const [timeRemaining, setTimeRemaining] = useState(new Date());
@@ -22,9 +21,6 @@ function NewCause() {
   }
   function handleDescriptionSubmit(event) {
     setDescription(event.target.value);
-  }
-  function handleNumberOfDonationsSubmit(event) {
-    setNumberOfDonations(event.target.value);
   }
   function handleAmountRaisedSubmit(event) {
     setAmountRaised(event.target.value);
@@ -47,7 +43,6 @@ function NewCause() {
     formData.append("name", name);
     formData.append("organization", organization);
     formData.append("description", description);
-    formData.append("number_of_donations", numberOfDonations);
     formData.append("amount_raised", amountRaised);
     formData.append("amount_needed", amountNeeded);
     formData.append("time_remaining", timeRemaining);
@@ -92,14 +87,6 @@ function NewCause() {
           type="text"
           value={organization}
           onChange={handleOrganizationSubmit}
-        />
-        <MDBInput
-          wrapperClass="mb-4"
-          id="numberOfDonations"
-          label="Number Of Donations"
-          type="number"
-          value={numberOfDonations}
-          onChange={handleNumberOfDonationsSubmit}
         />
         <MDBInput
           wrapperClass="mb-4"

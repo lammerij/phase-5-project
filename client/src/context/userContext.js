@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 //create the context object
 const UserContext = createContext();
@@ -10,6 +10,30 @@ function UserProvider({ children }) {
   const [donations, setDonations] = useState([])
 
   const value = [user, setUser, causes, setCauses, donations, setDonations]
+
+  useEffect(() => {
+    fetch("/me").then((response) => {
+      if (response.ok) {
+        response.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch("/causes").then((response) => {
+      if (response.ok) {
+        response.json().then((causes) => setCauses(causes));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch("/donations").then((response) => {
+      if (response.ok) {
+        response.json().then((donations) => setDonations(donations));
+      }
+    });
+  }, []);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

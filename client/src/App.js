@@ -12,29 +12,6 @@ import DonorHome from "./components/DonorHome";
 
 function App() {
   const [user, setUser, causes, setCauses, donations, setDonations] = useContext(UserContext);
-  useEffect(() => {
-    fetch("/me").then((response) => {
-      if (response.ok) {
-        response.json().then((user) => setUser(user));
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    fetch("/causes").then((response) => {
-      if (response.ok) {
-        response.json().then((cause) => setCauses(cause));
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    fetch("/donations").then((response) => {
-      if (response.ok) {
-        response.json().then((donation) => setDonations(donation));
-      }
-    });
-  }, []);
 
 
 

@@ -3,7 +3,8 @@ import { UserContext } from '../context/userContext'
 import CauseCard from './CauseCard'
 
 function CauseList() {
-  const [user, setUser, causes, setCauses] = useContext(UserContext)
+  const [user, setUser, causes, setCauses, donations, setDonations] = useContext(UserContext)
+
 
 
 
