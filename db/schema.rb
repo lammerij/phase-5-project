@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_14_144429) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_23_151307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,7 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_14_144429) do
     t.text "name"
     t.string "organization"
     t.text "description"
-    t.integer "number_of_donations"
     t.float "amount_raised"
     t.float "amount_needed"
     t.datetime "time_remaining", precision: nil

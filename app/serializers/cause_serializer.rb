@@ -1,6 +1,6 @@
 class CauseSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :name, :organization, :description, :number_of_donations, :amount_raised, :amount_needed, :time_remaining, :image
+  attributes :id, :name, :organization, :description, :amount_raised, :amount_needed, :time_remaining, :image
   belongs_to :organizer
   has_many :donations
   has_many :donors, through: :donations

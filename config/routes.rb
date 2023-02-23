@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   
 
-  resources :causes, only: [:index, :create, :destroy]
-  resources :donations
+  resources :causes, only: [:index, :create, :show, :update, :destroy]
+  resources :donations, only: [:index, :create, :show, :destroy]
   resources :users, only: [:update]
   
   

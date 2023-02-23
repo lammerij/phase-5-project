@@ -64,8 +64,7 @@ function NewCause() {
     setName("");
     setOrganization("");
     setDescription("");
-    setNumberOfDonations("");
-    setAmountRaised(0);
+    setAmountRaised();
     setAmountNeeded(0);
     setSelectedImage(null);
     setTimeRemaining(new Date());

@@ -17,6 +17,12 @@ class CausesController < ApplicationController
     render json: new_cause, status: :created
   end
 
+  def update
+    cause = Cause.find_by(id: params[:id])
+    cause.update!(cause_params)
+    render json: cause
+  end
+
   def destroy
     user = User.find_by(id: session[:user_id])
     cause = user.causes.find_by(id: params[:id])
