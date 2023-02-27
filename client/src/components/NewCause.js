@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit";
 
 function NewCause() {
@@ -12,6 +13,7 @@ function NewCause() {
   const [timeRemaining, setTimeRemaining] = useState(new Date());
   const [errors, setErrors] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate();
 
   function handleNameSubmit(event) {
     setName(event.target.value);
@@ -68,6 +70,7 @@ function NewCause() {
     setAmountNeeded(0);
     setSelectedImage(null);
     setTimeRemaining(new Date());
+    navigate("/causes");
   };
   return (
     <>

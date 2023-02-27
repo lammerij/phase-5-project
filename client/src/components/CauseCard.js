@@ -1,20 +1,20 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   MDBCard,
   MDBCardBody,
   MDBCardTitle,
   MDBCardText,
   MDBCardImage,
-  MDBCardGroup,
-  MDBRipple,
+  MDBListGroup,
+  MDBListGroupItem,
   MDBBtn,
   MDBPopover,
   MDBPopoverBody,
   MDBPopoverHeader,
   MDBInput,
-  MDBCardFooter,
+  MDBCol,
 } from "mdb-react-ui-kit";
 
 function CauseCard({ cause }) {
@@ -29,9 +29,11 @@ function CauseCard({ cause }) {
     setDonations,
   ] = useContext(UserContext);
   const [amount, setAmount] = useState();
-  const [newDonation, setNewDonation] = useState({});
+  const navigate = useNavigate();
 
   // console.log(donations) returns undefined here but not in CauseList
+
+  
 
   const {
     id,
@@ -50,7 +52,7 @@ function CauseCard({ cause }) {
   };
 
   function updateAmountRaised(updatedTotal) {
-    const updatedAmountRaised = causes.map((cause) => 
+    const updatedAmountRaised = causes.map((cause) =>
       cause.id !== updatedTotal.id ? cause : updatedTotal
     );
     setCauses(updatedAmountRaised);
@@ -61,13 +63,11 @@ function CauseCard({ cause }) {
   }
 
   function updateCauseTotal(newAmount) {
-
     const causeId = cause.id;
 
     const formData = new FormData();
     formData.append("amount_raised", newAmount);
     formData.append("cause_id", causeId);
-
 
     fetch(`/causes/${id}`, {
       method: "PATCH",
@@ -108,7 +108,7 @@ function CauseCard({ cause }) {
       }
     });
     setAmount();
-    redirect("causes");
+    navigate("/causes");
   }
 
   function handleDeleteCause() {
@@ -123,75 +123,42 @@ function CauseCard({ cause }) {
   }
 
   const viewTemplate = (
-    <MDBCardGroup>
-      <MDBCard alignment="center" style={{ maxWidth: "450px" }}>
-        <MDBRipple
-          rippleColor="light"
-          rippleTag="div"
-          className="bg-image hover-overlay"
-        >
-          <MDBCardImage src={image} fluid alt="..." position="top" />
-          <a>
-            <div
-              className="mask"
-              style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-            ></div>
-          </a>
-        </MDBRipple>
+    <MDBCol>
+      <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
+        <MDBCardImage src={image} fluid alt="..." position="top" />
         <MDBCardBody>
-          <MDBCardTitle>{name}</MDBCardTitle>
-          <ul className="list-group list-group-light list-group-small">
-            <li className="list-group-item px-4">{organization}</li>
-            <li className="list-group-item px-4">
-              Amount Needed: ${amount_needed}
-            </li>
-            <li className="list-group-item px-4">
-              Amount Raised: ${amount_raised}
-            </li>
-            <li className="list-group-item px-4">
+          <MDBListGroup flush>
+            {organization}
+            <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
+            <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
+            <MDBListGroupItem>
               Time Left To Donate: {time_remaining}
-            </li>
-          </ul>
-          <MDBCardText>{description}</MDBCardText>
+            </MDBListGroupItem>
+            <MDBListGroupItem>{description}</MDBListGroupItem>
+          </MDBListGroup>
           <MDBBtn>Donations</MDBBtn>
         </MDBCardBody>
-        <MDBCardFooter></MDBCardFooter>
       </MDBCard>
-    </MDBCardGroup>
+    </MDBCol>
   );
 
   const donorTemplate = (
-    <MDBCardGroup>
-      <MDBCard alignment="center" style={{ maxWidth: "450px" }}>
-        <MDBRipple
-          rippleColor="light"
-          rippleTag="div"
-          className="bg-image hover-overlay"
-        >
-          <MDBCardImage src={image} fluid alt="..." position="top" />
-          <a>
-            <div
-              className="mask"
-              style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-            ></div>
-          </a>
-        </MDBRipple>
+    <MDBCol>
+      <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
+        <MDBCardImage src={image} fluid alt="..." position="top" />
+
         <MDBCardBody>
           <MDBCardTitle>{name}</MDBCardTitle>
-          <ul class="list-group list-group-light list-group-small">
-            <li class="list-group-item px-4">{organization}</li>
-            <li class="list-group-item px-4">
-              Amount Needed: ${amount_needed}
-            </li>
-            <li class="list-group-item px-4">
-              Amount Raised: ${amount_raised}
-            </li>
-            <li class="list-group-item px-4">
+          <MDBListGroup flush>
+            {organization}
+            <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
+            <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
+            <MDBListGroupItem>
               Time Left To Donate: {time_remaining}
-            </li>
-          </ul>
-          <MDBCardText>{description}</MDBCardText>
-          <MDBPopover color="danger" btnChildren="Donate!" placement="right">
+            </MDBListGroupItem>
+            <MDBListGroupItem>{description}</MDBListGroupItem>
+          </MDBListGroup>
+          <MDBPopover color="danger" btnChildren="Donate!" placement="top">
             <MDBPopoverHeader alignment="center">
               Make A Difference!
             </MDBPopoverHeader>
@@ -212,47 +179,29 @@ function CauseCard({ cause }) {
             </MDBPopoverBody>
           </MDBPopover>
         </MDBCardBody>
-        <MDBCardFooter></MDBCardFooter>
       </MDBCard>
-    </MDBCardGroup>
+    </MDBCol>
   );
 
   const deleteTemplate = (
-    <MDBCardGroup>
-      <MDBCard alignment="center" style={{ maxWidth: "450px" }}>
-        <MDBRipple
-          rippleColor="light"
-          rippleTag="div"
-          className="bg-image hover-overlay"
-        >
-          <MDBCardImage src={image} fluid alt="..." />
-          <a>
-            <div
-              className="mask"
-              style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-            ></div>
-          </a>
-        </MDBRipple>
+    <MDBCol>
+      <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
+        <MDBCardImage src={image} fluid alt="..." />
         <MDBCardBody>
-          <MDBCardTitle>{name}</MDBCardTitle>
-          <ul className="list-group list-group-light list-group-small">
-            <li className="list-group-item px-4">
-              Amount Needed: ${amount_needed}
-            </li>
-            <li className="list-group-item px-4">
-              Amount Raised: ${amount_raised}
-            </li>
-            <li className="list-group-item px-4">
+          <MDBListGroup flush>
+            {organization}
+            <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
+            <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
+            <MDBListGroupItem>
               Time Left To Donate: {time_remaining}
-            </li>
-          </ul>
-          <MDBCardText>{description}</MDBCardText>
+            </MDBListGroupItem>
+            <MDBListGroupItem>{description}</MDBListGroupItem>
+          </MDBListGroup>
           <MDBBtn>Donations</MDBBtn>
           <MDBBtn onClick={handleDeleteCause}>End Cause</MDBBtn>
         </MDBCardBody>
-        <MDBCardFooter></MDBCardFooter>
       </MDBCard>
-    </MDBCardGroup>
+    </MDBCol>
   );
 
   if (user.id === cause.organizer.id) return deleteTemplate;

@@ -18,7 +18,7 @@ function NavBar() {
       <Link to="/">goFundit</Link>
       <Link to="/causes">Causes</Link>
       <Link to="/newcause">New Cause</Link>
-      <Link to="/mycauses">My Causes</Link>
+      <Link to="/donations">Donations</Link>
       <Link to="/profile">Profile</Link>
       <span>
         Hello {user.username}!
