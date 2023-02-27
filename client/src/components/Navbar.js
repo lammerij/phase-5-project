@@ -21,7 +21,7 @@ function NavBar() {
       <Link to="/donations">Donations</Link>
       <Link to="/profile">Profile</Link>
       <span>
-        Hello {user.username}!
+        Hello {user.username}!{" "}
         <button className="sign-out" onClick={handleLogoutClick}>
           Logout
         </button>

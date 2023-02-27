@@ -33,7 +33,6 @@ function CauseCard({ cause }) {
 
   // console.log(donations) returns undefined here but not in CauseList
 
-  
 
   const {
     id,

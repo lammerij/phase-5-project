@@ -15,6 +15,7 @@ function App() {
   const [user, setUser, causes, setCauses, donations, setDonations] =
     useContext(UserContext);
 
+
   if (!user) return <Login />;
 
   if (user.type === "Organizer") {
