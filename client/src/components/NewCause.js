@@ -19,7 +19,6 @@ function NewCause() {
   const navigate = useNavigate();
   format(new Date(), 'dd/mm/yyyy')
 
-  console.log(causes)
 
   function handleNameSubmit(event) {
     setName(event.target.value);
@@ -73,7 +72,7 @@ function NewCause() {
           navigate("/causes");
         });
       } else {
-        res.json().then((error) => setErrors(error.errors));
+        res.json().then((error) => console.log(error.errors));
       }
     });
 

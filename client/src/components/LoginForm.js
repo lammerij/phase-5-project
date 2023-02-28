@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Error, Input, FormField, Label } from "../styles";
 import {UserContext} from '../context/userContext'
 
@@ -8,6 +9,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate()
 
   const [currentUser, setCurrentUser] = useContext(UserContext)
 
@@ -32,6 +34,7 @@ function LoginForm() {
       setIsLoading(false);
       if (response.ok) {
         response.json().then((user) => setCurrentUser(user));
+        navigate('/')
       } else {
         response.json().then((error) => setErrors(error.errors));
       }

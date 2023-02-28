@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useContext } from "react";
 import { Button, Input, FormField, Label } from "../styles";
-
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
 function Signup() {
@@ -12,6 +12,7 @@ function Signup() {
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
@@ -52,6 +53,7 @@ function Signup() {
       if (res.ok) {
         res.json().then((newUser) => {
           setCurrentUser(newUser);
+          navigate("/");
         });
       } else {
         res.json().then((error) => setErrors(error.errors));

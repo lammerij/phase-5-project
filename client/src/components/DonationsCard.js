@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../context/userContext";
 import {
   MDBCol,
@@ -8,9 +8,7 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
   MDBTypography,
-  MDBIcon,
 } from "mdb-react-ui-kit";
 
 function DonationsCard({ cause }) {
@@ -89,7 +87,6 @@ function DonationsCard({ cause }) {
                     <MDBTypography tag="h4">{cause.name}</MDBTypography>
                     <MDBCardText className="text-muted mb-4">
                       Donor: @{donor.display_name} <div>{displayAmount}</div>{" "}
-                      {/* <span className="mx-2"></span>{" "} */}
                     </MDBCardText>
                   </MDBCardBody>
                 </MDBCard>

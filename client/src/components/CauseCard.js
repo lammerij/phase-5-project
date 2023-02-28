@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
+import { Error, FormField } from "../styles";
 import { UserContext } from "../context/userContext";
-import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {
   MDBCard,
   MDBCardBody,
   MDBCardTitle,
-  MDBCardText,
   MDBCardImage,
   MDBListGroup,
   MDBListGroupItem,
@@ -32,8 +31,6 @@ function CauseCard({ cause }) {
   const [amount, setAmount] = useState();
   const navigate = useNavigate();
 
-  console.log(format(time_remaining, 'dd/mm/yyyy'))
-
   // console.log(donations) returns undefined here but not in CauseList
 
   const {
@@ -47,6 +44,12 @@ function CauseCard({ cause }) {
     image,
   } = cause;
 
+  const date =
+    time_remaining.substring(5, 7) +
+    "/" +
+    time_remaining.substring(8, 10) +
+    "/" +
+    time_remaining.substring(0, 4);
 
   const deletedCauseList = (deletedCause) => {
     const deletedCauses = causes.filter((cause) => cause.id !== deletedCause);
@@ -86,8 +89,6 @@ function CauseCard({ cause }) {
     });
   }
 
-  
-
   function handleDonationSubmit(event) {
     event.preventDefault();
 
@@ -108,7 +109,7 @@ function CauseCard({ cause }) {
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
-        console.log(errors);
+        setErrors(errors);
       }
     });
     setAmount();
@@ -135,12 +136,9 @@ function CauseCard({ cause }) {
             {organization}
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
             <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
-            <MDBListGroupItem>
-              Cause End Date: {time_remaining}
-            </MDBListGroupItem>
+            <MDBListGroupItem>Cause End Date: {date}</MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
-          <MDBBtn>Donations</MDBBtn>
         </MDBCardBody>
       </MDBCard>
     </MDBCol>
@@ -157,9 +155,7 @@ function CauseCard({ cause }) {
             {organization}
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
             <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
-            <MDBListGroupItem>
-              Cause End Date: {time_remaining}
-            </MDBListGroupItem>
+            <MDBListGroupItem>Cause End Date: {date}</MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
           <MDBPopover color="danger" btnChildren="Donate!" placement="top">
@@ -200,12 +196,9 @@ function CauseCard({ cause }) {
             {organization}
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
             <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
-            <MDBListGroupItem>
-              Cause End Date: {time_remaining}
-            </MDBListGroupItem>
+            <MDBListGroupItem>Cause End Date: {date}</MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
-          <MDBBtn>Donations</MDBBtn>
           <MDBBtn onClick={handleDeleteCause}>End Cause</MDBBtn>
         </MDBCardBody>
       </MDBCard>
