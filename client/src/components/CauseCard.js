@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
+import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {
   MDBCard,
@@ -31,8 +32,9 @@ function CauseCard({ cause }) {
   const [amount, setAmount] = useState();
   const navigate = useNavigate();
 
-  // console.log(donations) returns undefined here but not in CauseList
+  console.log(format(time_remaining, 'dd/mm/yyyy'))
 
+  // console.log(donations) returns undefined here but not in CauseList
 
   const {
     id,
@@ -44,6 +46,7 @@ function CauseCard({ cause }) {
     time_remaining,
     image,
   } = cause;
+
 
   const deletedCauseList = (deletedCause) => {
     const deletedCauses = causes.filter((cause) => cause.id !== deletedCause);
@@ -82,6 +85,8 @@ function CauseCard({ cause }) {
       }
     });
   }
+
+  
 
   function handleDonationSubmit(event) {
     event.preventDefault();
@@ -131,7 +136,7 @@ function CauseCard({ cause }) {
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
             <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
             <MDBListGroupItem>
-              Time Left To Donate: {time_remaining}
+              Cause End Date: {time_remaining}
             </MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
@@ -153,7 +158,7 @@ function CauseCard({ cause }) {
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
             <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
             <MDBListGroupItem>
-              Time Left To Donate: {time_remaining}
+              Cause End Date: {time_remaining}
             </MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
@@ -184,7 +189,11 @@ function CauseCard({ cause }) {
 
   const deleteTemplate = (
     <MDBCol>
-      <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
+      <MDBCard
+        className="h-100"
+        alignment="center"
+        style={{ maxWidth: "350px" }}
+      >
         <MDBCardImage src={image} fluid alt="..." />
         <MDBCardBody>
           <MDBListGroup flush>
@@ -192,7 +201,7 @@ function CauseCard({ cause }) {
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
             <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
             <MDBListGroupItem>
-              Time Left To Donate: {time_remaining}
+              Cause End Date: {time_remaining}
             </MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>

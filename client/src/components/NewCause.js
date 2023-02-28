@@ -1,10 +1,13 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
+import {format} from 'date-fns'
 import { MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit";
 
 function NewCause() {
-  const [cause, setCause] = useState([]);
+  const [user, setUser, causes, setCauses] = useContext(UserContext)
+  const [cause, setCause] = useState({});
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
   const [description, setDescription] = useState("");
@@ -14,6 +17,9 @@ function NewCause() {
   const [errors, setErrors] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
+  format(new Date(), 'dd/mm/yyyy')
+
+  console.log(causes)
 
   function handleNameSubmit(event) {
     setName(event.target.value);
@@ -56,21 +62,21 @@ function NewCause() {
     }).then((res) => {
       if (res.ok) {
         res.json().then((newCause) => {
-          setCause(newCause);
+          setCauses([...causes, newCause]);
+          setName("");
+          setOrganization("");
+          setDescription("");
+          setAmountRaised();
+          setAmountNeeded(0);
+          setSelectedImage(null);
+          setTimeRemaining(new Date());
+          navigate("/causes");
         });
       } else {
         res.json().then((error) => setErrors(error.errors));
       }
     });
 
-    setName("");
-    setOrganization("");
-    setDescription("");
-    setAmountRaised();
-    setAmountNeeded(0);
-    setSelectedImage(null);
-    setTimeRemaining(new Date());
-    navigate("/causes");
   };
   return (
     <>
@@ -124,6 +130,7 @@ function NewCause() {
         />
         <MDBInput
           wrapperClass="mb-4"
+          textBefore='Upload'
           id="avatar"
           type="file"
           name="avatar"
