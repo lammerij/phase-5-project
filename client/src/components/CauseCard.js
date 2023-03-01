@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { Error, FormField } from "../styles";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,11 +9,15 @@ import {
   MDBListGroup,
   MDBListGroupItem,
   MDBBtn,
-  MDBPopover,
-  MDBPopoverBody,
-  MDBPopoverHeader,
-  MDBInput,
   MDBCol,
+  MDBModalTitle,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBInput,
 } from "mdb-react-ui-kit";
 
 function CauseCard({ cause }) {
@@ -28,8 +31,10 @@ function CauseCard({ cause }) {
     donations,
     setDonations,
   ] = useContext(UserContext);
+  const [basicModal, setBasicModal] = useState(false);
   const [amount, setAmount] = useState();
   const navigate = useNavigate();
+  const toggleShow = () => setBasicModal(!basicModal);
 
   // console.log(donations) returns undefined here but not in CauseList
 
@@ -148,7 +153,6 @@ function CauseCard({ cause }) {
     <MDBCol>
       <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
         <MDBCardImage src={image} fluid alt="..." position="top" />
-
         <MDBCardBody>
           <MDBCardTitle>{name}</MDBCardTitle>
           <MDBListGroup flush>
@@ -158,26 +162,42 @@ function CauseCard({ cause }) {
             <MDBListGroupItem>Cause End Date: {date}</MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
-          <MDBPopover color="danger" btnChildren="Donate!" placement="top">
-            <MDBPopoverHeader alignment="center">
-              Make A Difference!
-            </MDBPopoverHeader>
-            <MDBPopoverBody>
-              <form onSubmit={handleDonationSubmit}>
-                <MDBInput
-                  label="$Enter Amount..."
-                  type="number"
-                  id="amount"
-                  name="amount"
-                  value={amount}
-                  onChange={handleAmountChange}
-                ></MDBInput>
-                <MDBBtn rounded type="submit" alignment="center">
-                  Give!
-                </MDBBtn>
-              </form>
-            </MDBPopoverBody>
-          </MDBPopover>
+          <MDBBtn onClick={toggleShow}>GIVE NOW!</MDBBtn>
+          <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+            <MDBModalDialog>
+              <MDBModalContent>
+                <MDBModalHeader>
+                  <MDBModalTitle>MAKE A DIFFERENCE</MDBModalTitle>
+                  <MDBBtn
+                    className="btn-close"
+                    color="none"
+                    onClick={toggleShow}
+                  ></MDBBtn>
+                </MDBModalHeader>
+                <MDBModalBody>
+                  {" "}
+                  <form onSubmit={handleDonationSubmit}>
+                    <MDBInput
+                      label="$ Enter Amount..."
+                      type="number"
+                      id="amount"
+                      name="amount"
+                      value={amount}
+                      onChange={handleAmountChange}
+                    ></MDBInput>
+                    <MDBBtn rounded type="submit" alignment="center">
+                      Give!
+                    </MDBBtn>
+                  </form>{" "}
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="secondary" onClick={toggleShow}>
+                    Close
+                  </MDBBtn>
+                </MDBModalFooter>
+              </MDBModalContent>
+            </MDBModalDialog>
+          </MDBModal>
         </MDBCardBody>
       </MDBCard>
     </MDBCol>
@@ -214,3 +234,17 @@ function CauseCard({ cause }) {
 }
 
 export default CauseCard;
+
+/* <form onSubmit={handleDonationSubmit}>
+<MDBInput
+  label="$Enter Amount..."
+  type="number"
+  id="amount"
+  name="amount"
+  value={amount}
+  onChange={handleAmountChange}
+></MDBInput>
+<MDBBtn rounded type="submit" alignment="center">
+  Give!
+</MDBBtn>
+</form> */

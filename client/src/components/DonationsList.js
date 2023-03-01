@@ -6,7 +6,6 @@ function DonationsList() {
   const [user, setUser, causes, setCauses, donations, setDonations] =
     useContext(UserContext);
 
-
   const listOfCauses = causes.map((cause, id) => {
     return <DonationsCard key={id} cause={cause} />;
   });

@@ -10,7 +10,9 @@ function CauseList() {
   const displayCause = causes.map((cause, id) => {
     return <CauseCard cause={cause} key={id} />;
   });
-  return <MDBRow className='row-cols-1 row-cols-md-3 g-4'>{displayCause}</MDBRow>;
+  return (
+    <MDBRow className="row-cols-1 row-cols-md-3 g-4">{displayCause}</MDBRow>
+  );
 }
 
 export default CauseList;
