@@ -2,11 +2,11 @@ import React from "react";
 import { useState, useContext } from "react";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
-import {format} from 'date-fns'
+import { format } from "date-fns";
 import { MDBInput, MDBBtn, MDBTextArea } from "mdb-react-ui-kit";
 
 function NewCause() {
-  const [user, setUser, causes, setCauses] = useContext(UserContext)
+  const [user, setUser, causes, setCauses] = useContext(UserContext);
   const [cause, setCause] = useState({});
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
@@ -17,8 +17,7 @@ function NewCause() {
   const [errors, setErrors] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
-  format(new Date(), 'dd/mm/yyyy')
-
+  format(new Date(), "dd/mm/yyyy");
 
   function handleNameSubmit(event) {
     setName(event.target.value);
@@ -75,7 +74,6 @@ function NewCause() {
         res.json().then((error) => console.log(error.errors));
       }
     });
-
   };
   return (
     <>
@@ -129,7 +127,7 @@ function NewCause() {
         />
         <MDBInput
           wrapperClass="mb-4"
-          textBefore='Upload'
+          textBefore="Upload"
           id="avatar"
           type="file"
           name="avatar"

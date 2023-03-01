@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { Button, Input, FormField, Label } from "../styles";
+import { Button, Input, FormField, Label, Error } from "../styles";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
@@ -121,11 +121,11 @@ function Signup() {
       <FormField>
         <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
       </FormField>
-      {/* <FormField>
+      <FormField>
         {errors.map((err) => (
           <Error key={err}>{err}</Error>
         ))}
-      </FormField> */}
+      </FormField>
     </form>
   );
 }
