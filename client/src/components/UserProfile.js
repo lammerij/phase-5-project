@@ -23,7 +23,6 @@ function UserProfile() {
   const [user, setUser, errors, setErrors, causes, setCauses] =
     useContext(UserContext);
   const [selectedFile, setSelectedImage] = useState(null);
-  const [displayName, setDisplayName] = useState(user.display_name);
   const [basicModal, setBasicModal] = useState(false);
 
   const { display_name, type, image } = user;
@@ -32,10 +31,6 @@ function UserProfile() {
 
   function handleFileChange(event) {
     setSelectedImage(event.target.files[0]);
-  }
-
-  function handleDisplayNameChange(event) {
-    setDisplayName(event.target.value);
   }
 
   // console.log(user);
@@ -47,9 +42,9 @@ function UserProfile() {
 
     const formData = new FormData();
 
-    formData.append("image", selectedFile);
-    formData.append("display_name", displayName);
-
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
     fetch(`/users/${userId}`, {
       method: "PATCH",
       body: formData,
@@ -106,13 +101,6 @@ function UserProfile() {
                         id="avatar"
                         name="avatar"
                         onChange={handleFileChange}
-                      ></MDBInput>
-                      Update Display Name:
-                      <MDBInput
-                        type="text"
-                        id="displayName"
-                        value={displayName}
-                        onChange={handleDisplayNameChange}
                       ></MDBInput>
                       <MDBModalFooter>
                         <MDBBtn color="secondary" onClick={toggleShow}>
