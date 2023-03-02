@@ -96,8 +96,8 @@ If you already registered go ahead and login, if not click on "Sign Up"
 
 Once you create a profile, as an organizer you can create a new cause or if as a donor you can give browse the cause list and give.
 
-<img src="/client/public/give.png" alt="Alt text" title="Give" width='300' height='300'>
+<img src="/client/public/give.png" alt="Alt text" title="Give" width='300' height='200'>
 
 OR create a new cause
 
-<img src="/client/public/new cause.png" alt="Alt text" title="New Cause" width='300' height='300'> 
+<img src="/client/public/new cause.png" alt="Alt text" title="New Cause" width='300' height='200'> 
