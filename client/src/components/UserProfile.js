@@ -23,6 +23,7 @@ function UserProfile() {
   const [user, setUser, errors, setErrors, causes, setCauses] =
     useContext(UserContext);
   const [selectedFile, setSelectedImage] = useState(null);
+  const [displayName, setDisplayName] = useState(user.display_name);
   const [basicModal, setBasicModal] = useState(false);
 
   const { display_name, type, image } = user;
@@ -31,6 +32,10 @@ function UserProfile() {
 
   function handleFileChange(event) {
     setSelectedImage(event.target.files[0]);
+  }
+
+  function handleDisplayNameChange(event) {
+    setDisplayName(event.target.value);
   }
 
   // console.log(user);
@@ -42,9 +47,8 @@ function UserProfile() {
 
     const formData = new FormData();
 
-    if (selectedFile) {
-      formData.append("image", selectedFile);
-    }
+    formData.append("image", selectedFile);
+    formData.append("display_name", displayName);
 
     fetch(`/users/${userId}`, {
       method: "PATCH",
@@ -92,11 +96,24 @@ function UserProfile() {
                       onClick={toggleShow}
                     ></MDBBtn>
                   </MDBModalHeader>
-                  <MDBModalTitle>Update Your Profile Pic!</MDBModalTitle>
+                  <MDBModalTitle>Update Your Profile!</MDBModalTitle>
                   <MDBModalBody>
                     <form onSubmit={handleEditProfileSubmit}>
-                    <label htmlFor="avatar"></label>
-                      <MDBInput type="file" id="avatar" name="avatar" onChange={handleFileChange}></MDBInput>
+                      <label htmlFor="avatar"></label>
+                      Update Profile Pic:
+                      <MDBInput
+                        type="file"
+                        id="avatar"
+                        name="avatar"
+                        onChange={handleFileChange}
+                      ></MDBInput>
+                      Update Display Name:
+                      <MDBInput
+                        type="text"
+                        id="displayName"
+                        value={displayName}
+                        onChange={handleDisplayNameChange}
+                      ></MDBInput>
                       <MDBModalFooter>
                         <MDBBtn color="secondary" onClick={toggleShow}>
                           Close
