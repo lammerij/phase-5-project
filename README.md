@@ -18,7 +18,7 @@ Contained in this repository is the source code to this app, feel free to fork a
 
 The diagram below displays the relationships between the 5 models in the db.
 
-<img src="/client/public/dbDiagram.png" alt="Alt text" title="Optional title">
+<img src="/client/public/dbDiagram.png" alt="Alt text" title="dB Diagram">
 
 ## Installation
 
@@ -88,3 +88,10 @@ npm i -g npm
 ## Using The App
 
 Head over to https://phase-5-project-jg65.onrender.com/
+
+<img src="/client/public/Login.png" alt="Alt text" title="Login">
+
+
+If you already registered go ahead and login, if not click on "Sign Up"
+
+Once you create a profile, as an organizer you can create a new cause or if as a donor you can give browse the cause list and give. 

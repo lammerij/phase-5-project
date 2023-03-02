@@ -137,7 +137,7 @@ function CauseCard({ cause }) {
       <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
         <MDBCardImage src={image} fluid alt="..." position="top" />
         <MDBCardBody>
-        <MDBCardTitle>{name}</MDBCardTitle>
+          <MDBCardTitle>{name}</MDBCardTitle>
           <MDBListGroup flush>
             {organization}
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
@@ -213,7 +213,7 @@ function CauseCard({ cause }) {
       >
         <MDBCardImage src={image} fluid alt="..." />
         <MDBCardBody>
-        <MDBCardTitle>{name}</MDBCardTitle>
+          <MDBCardTitle>{name}</MDBCardTitle>
           <MDBListGroup flush>
             {organization}
             <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>

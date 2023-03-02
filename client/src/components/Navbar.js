@@ -30,7 +30,7 @@ function NavBar() {
         </span>{" "}
       </MDBContainer>
     </MDBNavbar>
-  );
+  )
 }
 
 export default NavBar;
