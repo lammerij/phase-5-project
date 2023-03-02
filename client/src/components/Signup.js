@@ -8,12 +8,13 @@ function Signup() {
   const [username, setUsername] = useState("");
   const [display_name, setDisplay_Name] = useState("");
   const [type, setType] = useState("");
+  const [errors, setErrors] = useState([])
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
-  const [currentUser, setCurrentUser, errors, setErrors] = useContext(UserContext);
+  const [currentUser, setCurrentUser] = useContext(UserContext);
 
   function handleUserNameChange(event) {
     setUsername(event.target.value);
