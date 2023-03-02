@@ -14,7 +14,7 @@ function Signup() {
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
-  const [currentUser, setCurrentUser] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   function handleUserNameChange(event) {
     setUsername(event.target.value);
@@ -52,7 +52,7 @@ function Signup() {
     }).then((res) => {
       if (res.ok) {
         res.json().then((newUser) => {
-          setCurrentUser(newUser);
+          setUser(newUser);
         });
       } else {
         res.json().then((error) => setErrors(error.errors));
