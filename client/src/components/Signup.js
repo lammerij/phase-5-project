@@ -62,18 +62,17 @@ function Signup() {
       if (res.ok) {
         res.json().then((newUser) => {
           setUser(newUser);
+          setUsername("");
+          setPassword("");
+          setDisplay_Name("");
+          setType("");
+          setSelectedImage(null);
+          navigate("/");
         });
       } else {
-        res.json().then((error) => setErrors(error.errors));
+        res.json().then((error) => console.log(error.errors));
       }
     });
-
-    setUsername("");
-    setPassword("");
-    setDisplay_Name("");
-    setType("");
-    setSelectedImage(null);
-    navigate("/");
   }
 
   return (

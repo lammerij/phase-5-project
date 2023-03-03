@@ -132,7 +132,7 @@ function CauseCard({ cause }) {
     });
   }
 
-  const viewTemplate = (
+  return (
     <MDBCol>
       <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
         <MDBCardImage src={image} fluid alt="..." position="top" />
@@ -145,25 +145,12 @@ function CauseCard({ cause }) {
             <MDBListGroupItem>Cause End Date: {date}</MDBListGroupItem>
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
-        </MDBCardBody>
-      </MDBCard>
-    </MDBCol>
-  );
-
-  const donorTemplate = (
-    <MDBCol>
-      <MDBCard alignment="center" style={{ maxWidth: "350px" }}>
-        <MDBCardImage src={image} fluid alt="..." position="top" />
-        <MDBCardBody>
-          <MDBCardTitle>{name}</MDBCardTitle>
-          <MDBListGroup flush>
-            {organization}
-            <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
-            <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
-            <MDBListGroupItem>Cause End Date: {date}</MDBListGroupItem>
-            <MDBListGroupItem>{description}</MDBListGroupItem>
-          </MDBListGroup>
-          <MDBBtn onClick={toggleShow}>GIVE NOW!</MDBBtn>
+          {user.id === cause.organizer.id && (
+            <MDBBtn onClick={handleDeleteCause}>End Cause</MDBBtn>
+          )}
+          {user.type === "Donor" && (
+            <MDBBtn onClick={toggleShow}>GIVE NOW!</MDBBtn>
+          )}
           <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
             <MDBModalDialog>
               <MDBModalContent>
@@ -203,50 +190,6 @@ function CauseCard({ cause }) {
       </MDBCard>
     </MDBCol>
   );
-
-  const deleteTemplate = (
-    <MDBCol>
-      <MDBCard
-        className="h-100"
-        alignment="center"
-        style={{ maxWidth: "350px" }}
-      >
-        <MDBCardImage src={image} fluid alt="..." />
-        <MDBCardBody>
-          <MDBCardTitle>{name}</MDBCardTitle>
-          <MDBListGroup flush>
-            {organization}
-            <MDBListGroupItem>Amount Needed: ${amount_needed}</MDBListGroupItem>
-            <MDBListGroupItem>Amount Raised: ${amount_raised}</MDBListGroupItem>
-            <MDBListGroupItem>Cause End Date: {date}</MDBListGroupItem>
-            <MDBListGroupItem>{description}</MDBListGroupItem>
-          </MDBListGroup>
-          <MDBBtn onClick={handleDeleteCause}>End Cause</MDBBtn>
-        </MDBCardBody>
-      </MDBCard>
-    </MDBCol>
-  );
-
-  if (user.id === cause.organizer.id) return deleteTemplate;
-  else if (user.type === "Donor") {
-    return donorTemplate;
-  } else {
-    return viewTemplate;
-  }
 }
 
 export default CauseCard;
-
-/* <form onSubmit={handleDonationSubmit}>
-<MDBInput
-  label="$Enter Amount..."
-  type="number"
-  id="amount"
-  name="amount"
-  value={amount}
-  onChange={handleAmountChange}
-></MDBInput>
-<MDBBtn rounded type="submit" alignment="center">
-  Give!
-</MDBBtn>
-</form> */

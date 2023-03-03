@@ -12,5 +12,4 @@ class ApplicationController < ActionController::API
   def find_cause
     Cause.find_by(id: params[:id])
   end
-  
 end
