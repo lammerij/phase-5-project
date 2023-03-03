@@ -13,8 +13,12 @@ class UsersController < ApplicationController
 
   def create
     user = User.create!(user_params)
-    session[:user_id] = user.id
-    render json: user, status: :accepted
+    if user.valid?
+      session[:user_id] = user.id
+      render json: user, status: :created
+    else
+      render json: { error: ["user_data_invalid"] }, status: :unprocessable_entity
+    end
   end
 
   def update
