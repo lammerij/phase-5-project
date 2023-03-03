@@ -9,6 +9,7 @@ function Error({ children }) {
   );
 }
 
+
 const Wrapper = styled.div`
   color: red;
   background-color: mistyrose;

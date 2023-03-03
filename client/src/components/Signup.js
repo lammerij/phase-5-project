@@ -38,6 +38,15 @@ function Signup() {
   function handleNewUserSubmit(event) {
     event.preventDefault();
 
+    if (
+      [username, type, display_name, password].some(
+        (value) => value.trim() === ""
+      )
+    ) {
+      alert("Please Fill Out Form, Thank You!");
+      return null;
+    }
+
     const formData = new FormData();
 
     formData.append("username", username);
