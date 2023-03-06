@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
   skip_before_action :authorize, only: :create
 
   def index
@@ -13,8 +14,12 @@ class UsersController < ApplicationController
 
   def create
     user = User.create!(user_params)
-    session[:user_id] = user.id
-    render json: user, status: :created
+    if user.valid?
+      session[:user_id] = user.id
+      render json: user, status: :accepted
+    else
+      render json: { error: ["user_data_invalid"] }, status: :unprocessable_entity
+    end
   end
 
   def update

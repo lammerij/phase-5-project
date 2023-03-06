@@ -32,10 +32,15 @@ function CauseCard({ cause }) {
     setDonations,
   ] = useContext(UserContext);
   const [basicModal, setBasicModal] = useState(false);
+  const [causeModal, setCauseModal] = useState(false);
   const [amount, setAmount] = useState();
+  const [editedCause, setEditedCause] = useState(cause);
+  const [newTotalAmount, setNewTotalAmount] = useState(cause.amount_raised);
   const navigate = useNavigate();
   const toggleShow = () => setBasicModal(!basicModal);
+  const toggleCause = () => setCauseModal(!causeModal);
 
+  // console.log(newAmount)
   // console.log(donations) returns undefined here but not in CauseList
 
   const {
@@ -61,6 +66,13 @@ function CauseCard({ cause }) {
     setCauses(deletedCauses);
   };
 
+  function updatedTimeList(updatedTime) {
+    const updateAll = causes.map((cause) =>
+      cause.id == updatedTime.id ? updatedTime : cause
+    );
+    setCauses(updateAll);
+  }
+
   function updateAmountRaised(updatedTotal) {
     const updatedAmountRaised = causes.map((cause) =>
       cause.id !== updatedTotal.id ? cause : updatedTotal
@@ -72,12 +84,36 @@ function CauseCard({ cause }) {
     setAmount(event.target.value);
   }
 
-  function updateCauseTotal(newAmount) {
-    const causeId = cause.id;
+  function handleEditChange(event) {
+    setEditedCause(event.target.value);
+  }
 
+  function timeChangeSubmit(event){
+    event.preventDefault()
+    const causeId = cause.id;
     const formData = new FormData();
-    formData.append("amount_raised", newAmount);
     formData.append("cause_id", causeId);
+    formData.append("time_remaining", time_remaining);
+    fetch(`/causes/${id}`, {
+      method: "PATCH",
+      body: formData,
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => {
+          updatedTimeList(data);
+        });
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    });
+  }
+
+  function updateCauseTotal(newTotalAmount) {
+    const causeId = cause.id;
+    const formData = new FormData();
+    formData.append("amount_raised", newTotalAmount);
+    formData.append("cause_id", causeId);
+    // formData.append("time_remaining", timeRemaining);
 
     fetch(`/causes/${id}`, {
       method: "PATCH",
@@ -89,7 +125,6 @@ function CauseCard({ cause }) {
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
-        console.log(errors);
       }
     });
   }
@@ -109,8 +144,8 @@ function CauseCard({ cause }) {
       body: formData,
     }).then((r) => {
       if (r.ok) {
-        r.json().then((newAmount) => {
-          updateCauseTotal(newAmount);
+        r.json().then((data) => {
+          updateCauseTotal(data);
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
@@ -146,8 +181,47 @@ function CauseCard({ cause }) {
             <MDBListGroupItem>{description}</MDBListGroupItem>
           </MDBListGroup>
           {user.id === cause.organizer.id && (
-            <MDBBtn onClick={handleDeleteCause}>End Cause</MDBBtn>
+            <>
+              <MDBBtn onClick={handleDeleteCause}>End Cause</MDBBtn>
+              <MDBBtn onClick={toggleCause}>Edit Cause</MDBBtn>
+            </>
           )}
+          <MDBModal show={causeModal} setShow={setCauseModal} tabIndex="-1">
+            <MDBModalDialog>
+              <MDBModalContent>
+                <MDBModalHeader>
+                  <MDBModalTitle>Change Cause End Date</MDBModalTitle>
+                  <MDBBtn
+                    className="btn-close"
+                    color="none"
+                    onClick={toggleCause}
+                  ></MDBBtn>
+                </MDBModalHeader>
+                <MDBModalBody>
+                  {" "}
+                  <form onSubmit={timeChangeSubmit}>
+                    <MDBInput
+                      wrapperClass="mb-4"
+                      id="timeRemaining"
+                      label="Fundraiser End Date"
+                      type="date"
+                      value={editedCause}
+                      onChange={handleEditChange}
+                    />
+                    <MDBBtn rounded type="submit" alignment="center">
+                      Submit!
+                    </MDBBtn>
+                  </form>{" "}
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="secondary" onClick={toggleCause}>
+                    Close
+                  </MDBBtn>
+                </MDBModalFooter>
+              </MDBModalContent>
+            </MDBModalDialog>
+          </MDBModal>
+
           {user.type === "Donor" && (
             <MDBBtn onClick={toggleShow}>GIVE NOW!</MDBBtn>
           )}

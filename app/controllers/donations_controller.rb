@@ -13,8 +13,12 @@ class DonationsController < ApplicationController
   
     def create
       new_donation = Donation.create!(donation_params)
+      if new_donation.valid?
       new_donation.cause.amount_raised += new_donation.amount
       render json: new_donation.cause.amount_raised, status: :created
+      else
+        render json: { errors: ["Please Enter Amount"] }, status: :unprocessable_entity
+      end 
     end
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { Button, Input, FormField, Label, Error } from "../styles";
+import { Button, Input, FormField, Label } from "../styles";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
@@ -62,6 +62,7 @@ function Signup() {
       if (res.ok) {
         res.json().then((newUser) => {
           setUser(newUser);
+          setErrors([])
           setUsername("");
           setPassword("");
           setDisplay_Name("");
@@ -70,7 +71,7 @@ function Signup() {
           navigate("/");
         });
       } else {
-        res.json().then((error) => console.log(error.errors));
+        res.json().then((error) => setErrors(error.errors));
       }
     });
   }
@@ -129,11 +130,13 @@ function Signup() {
       <FormField>
         <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
       </FormField>
-      <FormField>
-        {errors.map((err) => (
-          <Error key={err}>{err}</Error>
-        ))}
-      </FormField>
+      {errors?.length > 0 && (
+        <ul style={{ color: "red" }}>
+          {errors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
     </form>
   );
 }
