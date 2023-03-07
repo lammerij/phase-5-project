@@ -34,7 +34,7 @@ function CauseCard({ cause }) {
   const [basicModal, setBasicModal] = useState(false);
   const [causeModal, setCauseModal] = useState(false);
   const [amount, setAmount] = useState();
-  const [editedCause, setEditedCause] = useState(cause);
+  const [timeRemaining, setTimeRemaining] = useState(cause);
   const [newTotalAmount, setNewTotalAmount] = useState(cause.amount_raised);
   const navigate = useNavigate();
   const toggleShow = () => setBasicModal(!basicModal);
@@ -66,13 +66,6 @@ function CauseCard({ cause }) {
     setCauses(deletedCauses);
   };
 
-  function updatedTimeList(updatedTime) {
-    const updateAll = causes.map((cause) =>
-      cause.id == updatedTime.id ? updatedTime : cause
-    );
-    setCauses(updateAll);
-  }
-
   function updateAmountRaised(updatedTotal) {
     const updatedAmountRaised = causes.map((cause) =>
       cause.id !== updatedTotal.id ? cause : updatedTotal
@@ -84,16 +77,22 @@ function CauseCard({ cause }) {
     setAmount(event.target.value);
   }
 
+  function updatedTimeList(updatedTime) {
+    const updateAll = causes.map((cause) =>
+      cause.id == updatedTime.id ? updatedTime : cause
+    );
+    setCauses(updateAll);
+  }
   function handleEditChange(event) {
-    setEditedCause(event.target.value);
+    setTimeRemaining(event.target.value);
   }
 
-  function timeChangeSubmit(event){
-    event.preventDefault()
+  function timeChangeSubmit(event) {
+    event.preventDefault();
     const causeId = cause.id;
     const formData = new FormData();
     formData.append("cause_id", causeId);
-    formData.append("time_remaining", time_remaining);
+    formData.append("time_remaining", timeRemaining);
     fetch(`/causes/${id}`, {
       method: "PATCH",
       body: formData,
@@ -205,7 +204,7 @@ function CauseCard({ cause }) {
                       id="timeRemaining"
                       label="Fundraiser End Date"
                       type="date"
-                      value={editedCause}
+                      value={timeRemaining}
                       onChange={handleEditChange}
                     />
                     <MDBBtn rounded type="submit" alignment="center">
